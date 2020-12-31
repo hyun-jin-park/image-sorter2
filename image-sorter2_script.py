@@ -26,15 +26,19 @@
 
 # the folder in which the pictures that are to be sorted are stored
 # don't forget to end it with the sign '/' !
-input_folder = '/file_path/to/image_folder/'
+# input_folder = '/home/embian/Workspace/IDClassifier/result/4/UNK(5)/'
+# input_folder = '/home/embian/Workspace/data/images/val/passport_classified/UNK(5)/'
+input_folder = '/home/embian/Workspace/data/images/OCR_tagging/passport/'
 
-# the different folders into which you want to sort the images, e.g. ['cars', 'bikes', 'cats', 'horses', 'shoes']
-labels = ["label1", "label2", "label3"]
+# the different folders into which you wan증t to sort the images, e.g. ['cars', 'bikes', 'cats', 'horses', 'shoes']
+# labels = ["운전면허증(1)", "외국인등록증(2)", "거소증(3)", "여권(4)", "UNK(5)", "주민등록(6)", "영주증(7)"]
+# labels = ["UNK(1)", "InComplete(2)", "InvalidID(3)", "재분류(4)"]
+labels = ["네팔(1)", "필리핀(2)", "방글라데시(3)", "캄보디아(4)", "우즈벡키스탄(5)", "베트남(6)", "미얀마(7)", "스리랑카(8)", "러시아(9)", "기타(0)"]
 
 # provide either 'copy' or 'move', depending how you want to sort the images into the new folders
 # - 'move' starts where you left off last time sorting, no 'go to #pic', works with number-buttons for labeling, no txt-file for tracking after closing GUI, saves memory
 # - 'copy' starts always at beginning, has 'go to #pic', doesn't work with number-buttons, has a txt-for tracking the labels after closing the GUI
-copy_or_move = 'copy'
+copy_or_move = 'move'
 
 # Only relevant if copy_or_move = 'copy', else ignored
 # A file-path to a txt-file, that WILL be created by the script. The results of the sorting wil be stored there.
@@ -42,7 +46,7 @@ copy_or_move = 'copy'
 # If you provide a path to file that already exists, than this file will be used for keeping track of the storing.
 # This means: 1st time you run this script and such a file doesn't exist the file will be created and populated,
 # 2nd time you run the same script, and you use the same df_path, the script will use the file to continue the sorting.
-df_path = '/file_path/to/non_existing_file_df.txt'
+df_path = '/embian/home/Workspace/data/images/non_existing_file_df.txt'
 
 # a selection of what file-types to be sorted, anything else will be excluded
 file_extensions = ['.jpg', '.png', '.whatever']
@@ -122,6 +126,7 @@ class ImageGui:
         ### added in version 2
         self.buttons.append(tk.Button(frame, text="prev im", width=10, height=1, fg="green", command=lambda l=label: self.move_prev_image()))
         self.buttons.append(tk.Button(frame, text="next im", width=10, height=1, fg='green', command=lambda l=label: self.move_next_image()))
+
         ###
         
         # Add progress label
@@ -143,13 +148,13 @@ class ImageGui:
         self.sorting_label = tk.Label(frame, text=("in folder: %s" % (sorting_string)), width=15)
         
         # Place typing input in grid, in case the mode is 'copy'
-        if copy_or_move == 'copy':
-            tk.Label(frame, text="go to #pic:").grid(row=1, column=0)
-
-            self.return_ = tk.IntVar() # return_-> self.index
-            self.return_entry = tk.Entry(frame, width=6, textvariable=self.return_)
-            self.return_entry.grid(row=1, column=1, sticky='we')
-            master.bind('<Return>', self.num_pic_type)
+        # if copy_or_move == 'copy':
+        #     tk.Label(frame, text="go to #pic:").grid(row=1, column=0)
+        #
+        #     self.return_ = tk.IntVar() # return_-> self.index
+        #     self.return_entry = tk.Entry(frame, width=6, textvariable=self.return_)
+        #     self.return_entry.grid(row=1, column=1, sticky='we')
+        #     master.bind('<Return>', self.num_pic_type)
         ####
         
         # Place sorting label in grid
@@ -160,9 +165,12 @@ class ImageGui:
 
         # key bindings (so number pad can be used as shortcut)
         # make it not work for 'copy', so there is no conflict between typing a picture to go to and choosing a label with a number-key
-        if copy_or_move == 'move':
-            for key in range(self.n_labels):
-                master.bind(str(key+1), self.vote_key)
+        # if copy_or_move == 'move':
+        for key in range(self.n_labels):
+            master.bind(str(key+1), self.vote_key)
+
+        master.bind('<space>', lambda x: self.move_next_image())
+        master.bind('p', lambda x: self.move_prev_image())
 
     def show_next_image(self):
         """
@@ -285,7 +293,7 @@ class ImageGui:
         """
         image = Image.open(path)
         if(resize):
-            max_height = 500
+            max_height = 1400
             img = image 
             s = img.size
             ratio = max_height / s[1]
