@@ -28,12 +28,12 @@
 # don't forget to end it with the sign '/' !
 # input_folder = '/home/embian/Workspace/IDClassifier/result/4/UNK(5)/'
 # input_folder = '/home/embian/Workspace/data/images/val/passport_classified/UNK(5)/'
-input_folder = '/home/embian/Workspace/data/images/OCR_tagging/passport/'
+input_folder = '/home/embian/Workspace/image-sorter2/KR/'
 
 # the different folders into which you wan증t to sort the images, e.g. ['cars', 'bikes', 'cats', 'horses', 'shoes']
 # labels = ["운전면허증(1)", "외국인등록증(2)", "거소증(3)", "여권(4)", "UNK(5)", "주민등록(6)", "영주증(7)"]
 # labels = ["UNK(1)", "InComplete(2)", "InvalidID(3)", "재분류(4)"]
-labels = ["네팔(1)", "필리핀(2)", "방글라데시(3)", "캄보디아(4)", "우즈벡키스탄(5)", "베트남(6)", "미얀마(7)", "스리랑카(8)", "러시아(9)", "기타(0)"]
+labels = ["주민등록증(1)", "운전면허증(2)", "여권(3)", "외국인등록증(4)", "거소증(5)", "기타(6)"]
 
 # provide either 'copy' or 'move', depending how you want to sort the images into the new folders
 # - 'move' starts where you left off last time sorting, no 'go to #pic', works with number-buttons for labeling, no txt-file for tracking after closing GUI, saves memory
