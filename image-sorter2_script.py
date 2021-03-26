@@ -28,12 +28,14 @@
 # don't forget to end it with the sign '/' !
 # input_folder = '/home/embian/Workspace/IDClassifier/result/4/UNK(5)/'
 # input_folder = '/home/embian/Workspace/data/images/val/passport_classified/UNK(5)/'
-input_folder = '/home/embian/Workspace/image-sorter2/KR/'
+input_folder = 'd:/workspace/data/merge/'
 
 # the different folders into which you wan증t to sort the images, e.g. ['cars', 'bikes', 'cats', 'horses', 'shoes']
 # labels = ["운전면허증(1)", "외국인등록증(2)", "거소증(3)", "여권(4)", "UNK(5)", "주민등록(6)", "영주증(7)"]
 # labels = ["UNK(1)", "InComplete(2)", "InvalidID(3)", "재분류(4)"]
-labels = ["주민등록증(1)", "운전면허증(2)", "여권(3)", "외국인등록증(4)", "거소증(5)", "기타(6)"]
+labels = ["movie_play", "movie_buffer", "movie_wait", "ui",
+          "embedded_play", "embedded_buffer", "embedded_wait",
+          "progress_bar", "white_screen"]
 
 # provide either 'copy' or 'move', depending how you want to sort the images into the new folders
 # - 'move' starts where you left off last time sorting, no 'go to #pic', works with number-buttons for labeling, no txt-file for tracking after closing GUI, saves memory
@@ -46,7 +48,7 @@ copy_or_move = 'move'
 # If you provide a path to file that already exists, than this file will be used for keeping track of the storing.
 # This means: 1st time you run this script and such a file doesn't exist the file will be created and populated,
 # 2nd time you run the same script, and you use the same df_path, the script will use the file to continue the sorting.
-df_path = '/embian/home/Workspace/data/images/non_existing_file_df.txt'
+df_path = 'd:/workspace/data/merge/non_existing_file_df.txt'
 
 # a selection of what file-types to be sorted, anything else will be excluded
 file_extensions = ['.jpg', '.png', '.whatever']
@@ -120,7 +122,7 @@ class ImageGui:
         self.buttons = []
         for label in labels:
             self.buttons.append(
-                    tk.Button(frame, text=label, width=10, height=2, fg='blue', command=lambda l=label: self.vote(l))
+                    tk.Button(frame, text=label, width=15, height=2, fg='blue', command=lambda l=label: self.vote(l))
             )
             
         ### added in version 2
